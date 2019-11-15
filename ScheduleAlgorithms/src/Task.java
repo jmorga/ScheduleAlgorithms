@@ -10,7 +10,6 @@ public class Task implements Comparable<Task> {
 	private int ETime_384MHz;
 	private int priority;
 	
-	//jkjl;
 	public Task(String name, int period, int deadline, int ETime_1188MHz, int ETime_918MHz, int ETime_648MHz, int ETime_384MHz, String algorithm)
 	{
 		this.name = name;
