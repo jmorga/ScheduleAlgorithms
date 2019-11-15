@@ -28,6 +28,13 @@ public class Task implements Comparable<Task> {
 		}
 	}
 	
+	public int compareTo(Task obj)
+	{
+		if(obj == null) return 0;
+		
+		return obj.getPriority() - this.priority;
+	}
+	
 	public String getName() { return this.name; }
 	public int getPeriod() { return this.period; }
 	public int getDeadline() { return this.deadline; }
@@ -37,11 +44,4 @@ public class Task implements Comparable<Task> {
 	public int getETime_918MHz() { return this.ETime_918MHz; }
 	public int getETime_648MHz() { return this.ETime_648MHz; }
 	public int getETime_384MHZ() { return this.ETime_384MHz; }
-	
-	public int compareTo(Task obj)
-	{
-		if(this.priority == obj.getPriority()) return 0;
-		
-		return obj.getPriority() - this.priority;
-	}
 }
