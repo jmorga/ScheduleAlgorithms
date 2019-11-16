@@ -15,10 +15,10 @@ public class Task implements Comparable<Task> {
 		this.name = name;
 		this.period = period;
 		this.deadline = deadline;
-		this.ETime_1188MHz =ETime_1188MHz;
-		this.ETime_918MHz = ETime_918MHz;
-		this.ETime_648MHz = ETime_648MHz;
-		this.ETime_384MHz = ETime_384MHz;
+		this.ETime_1188MHz =ETime_1188MHz/1000;
+		this.ETime_918MHz = ETime_918MHz/1000;
+		this.ETime_648MHz = ETime_648MHz/1000;
+		this.ETime_384MHz = ETime_384MHz/1000;
 		
 		switch(algorithm)
 		{
