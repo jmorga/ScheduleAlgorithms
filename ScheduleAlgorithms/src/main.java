@@ -94,7 +94,7 @@ public class main {
         
     for (Task task : arrayOfTask) 
     {
-		task.ToString();
+		task.toString();
 	}
         
         
