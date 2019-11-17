@@ -1,11 +1,7 @@
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 
 public class main {
 
@@ -31,12 +27,11 @@ public class main {
                 new FileReader(fileName1);
 
             // Always wrap FileReader in BufferedReader.
-            BufferedReader bufferedReader = 
+           BufferedReader bufferedReader = 
                 new BufferedReader(fileReader);
             
            //Parses first line of input of input text
            String [] firstLineInput;
-           int firstLineCounter = 0;
            //String array full of line one values ready to set vars
            firstLineInput = bufferedReader.readLine().split(" ");
             
