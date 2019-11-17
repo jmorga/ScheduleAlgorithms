@@ -90,12 +90,9 @@ public class RM {
 	
 	private void addTaskToQueue(int period)
 	{
-		System.out.println("Period " + period);
-	
 		for(int i = 0; i < tasks.length; i++)
 			if(period % tasks[i].getPeriod() == 0) {
 				this.queue.add(tasks[i].getTask());
-				System.out.println(" " + tasks[i].getName());
 			}
 	}
 	
