@@ -20,42 +20,67 @@ public class RM {
 	public String getSchedule()
 	{
 		String schedule = "Start Time   Task Name   Frequency   Runtime   Energy\n";
+		String name = "IDLE";
+		String frequency = "IDLE";
 		Task task = null;
 		int lcm = this.getLeastCommonMultiple();
 		int currentPeriod = 0;
+		int lastPeriod = 0;
+		int timeSegment = 0;
 		int startTime = 0;
 		int timer = 0;
-		this.addTaskToQueue(currentPeriod);
 		
-		while(timer <= lcm)
+		this.addTaskToQueue(currentPeriod);
+		currentPeriod = this.getNextPeriod();
+		timeSegment = currentPeriod - lastPeriod;
+		
+		while(timer < lcm)
 		{
 			task = queue.poll();
-			startTime = timer + 1;
+			startTime = timer;
 			
-			if(task.getETime() < currentPeriod)
+			if(task == null)
 			{
+				name = "IDLE";
+				frequency = "IDLE";
+				timer += timeSegment;
+				lastPeriod = currentPeriod;
+				this.addTaskToQueue(currentPeriod);
+				currentPeriod = this.getNextPeriod();
+				timeSegment = currentPeriod - lastPeriod;
+			}
+			else if(task.getETime() < timeSegment)
+			{
+				name = task.getName();
+				frequency = "" + task.getFrequency();
 				timer += task.getETime();
-				currentPeriod -= task.getETime();
+				
+				timeSegment -= task.getETime();
 			}
 			else
 			{
-				task.setETime(task.getETime() - currentPeriod);
-				currentPeriod = this.getNextPeriod();
+				name = task.getName();
+				frequency = "" + task.getFrequency();
+				timer += timeSegment;
+				task.setETime(task.getETime() - timeSegment);
+				lastPeriod = currentPeriod;
 				this.addTaskToQueue(currentPeriod);
+				currentPeriod = this.getNextPeriod();
 				this.queue.add(task.getTask());
+				timeSegment = currentPeriod - lastPeriod;
 			}
 			
-			schedule += this.getScheduleString(startTime, task.getName(), task.getFrequency(), startTime - timer, 0);
+			schedule += this.getScheduleString(startTime, name, frequency, timer - startTime, 0);
 		}
 		
 		return schedule;
 	}
 	
-	private String getScheduleString(int StartTime, String taskName, int frequency, int runTime, int energy)
+	private String getScheduleString(int StartTime, String taskName, String frequency, int runTime, int energy)
 	{
 		String space = "            ";
 		
-		return  StartTime + space.substring(("" + StartTime).length()) +
+		return  StartTime + space.substring(("" + StartTime).length()-1) +
 				taskName + space.substring(taskName.length()) +
 				frequency + space.substring(("" + frequency).length()) +
 		        runTime + space.substring(("" + runTime).length()) +
@@ -64,24 +89,29 @@ public class RM {
 	
 	private void addTaskToQueue(int period)
 	{
+		System.out.println("Period " + period);
+	
 		for(int i = 0; i < tasks.length; i++)
-			if(period % tasks[i].getPeriod() == 0)
+			if(period % tasks[i].getPeriod() == 0) {
 				this.queue.add(tasks[i].getTask());
+				System.out.println(" " + tasks[i].getName());
+			}
 	}
 	
 	private int getNextPeriod()
 	{
-		int period= -1;
-		int index = 0;
+		int period= 1000000000;
 		
 		for(int i = 0 ; i < tasks.length; i++)
-			if(periods[i] > period) {
+			if(periods[i] < period) {
 				period = periods[i];
-				index = i;
 			}
 		
 		//updating critical points
-		periods[index] += tasks[index].getPeriod();
+		for(int i = 0 ; i < tasks.length; i++)
+			if(periods[i] == period) {
+				periods[i] += tasks[i].getPeriod();
+			}
 		
 		return period;
 	}
