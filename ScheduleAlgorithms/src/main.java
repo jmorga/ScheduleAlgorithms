@@ -93,7 +93,9 @@ public class main {
         
     for (Task task : arrayOfTask) 
     {
+
 		System.out.println(task.toString());
+
 	}
         
         
