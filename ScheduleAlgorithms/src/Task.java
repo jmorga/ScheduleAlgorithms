@@ -54,12 +54,6 @@ public class Task implements Comparable<Task> {
 		return frequency;
 	}
 	
-	public void ToString()// add condidtion for algoritm 
-	{
-		System.out.println(name + " " + period + " " + ETime_1188MHz + " " + ETime_918MHz + " "
-				+ ETime_648MHz + " " + ETime_384MHz);
-	}
-	
 	public String getName() { return this.name; }
 	public int getPeriod() { return this.period; }
 	public int getDeadline() { return this.deadline; }
@@ -75,6 +69,16 @@ public class Task implements Comparable<Task> {
 	
 	public Task getTask()
 	{
-		return new Task(this.name, this.period, this.deadline, this.ETime_1188MHz, this.ETime_918MHz, this.ETime_648MHz, this.ETime_384MHz, this.algorithm);
+		Task tmp = new Task(this.name, this.period, this.deadline, this.ETime_1188MHz, this.ETime_918MHz, this.ETime_648MHz, this.ETime_384MHz, this.algorithm);
+		tmp.setETime(this.ETime);
+		return tmp;
 	}
+	
+	public String toString()// add condidtion for algoritm  
+	{ 
+		return (name + " " + period + " " + ETime_1188MHz + " " + ETime_918MHz + " " 
+				+ ETime_648MHz + " " + ETime_384MHz); 
+	} 
+	 
 }
+
