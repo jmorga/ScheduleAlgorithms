@@ -53,6 +53,7 @@ public class RM {
 			{
 				name = task.getName();
 				frequency = "" + task.getFrequency();
+				
 				timer += task.getETime();
 				
 				timeSegment -= task.getETime();

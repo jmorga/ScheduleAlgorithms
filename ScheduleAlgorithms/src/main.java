@@ -63,7 +63,7 @@ public class main {
                int ET384 = Integer.parseInt(taskData[5]);
 
               
-               arrayOfTask[taskCount] = new Task(taskName, period, deadline, ET1188, ET918, ET648, ET384, "rm");
+               arrayOfTask[taskCount] = new Task(taskName, period, deadline, ET1188, ET918, ET648, ET384, "RM");
 
               
                taskCount++;
@@ -91,17 +91,18 @@ public class main {
         }
         
         
-    for (Task task : arrayOfTask) 
-    {
+        
+    //for (Task task : arrayOfTask) 
+    //{
 
-		System.out.println(task.toString());
+	//	System.out.println(task.toString());
 
-	}
+	//}
         
         
+    RM schedule = new RM(arrayOfTask);
     
-    
-     
+    System.out.println(schedule.getSchedule()); 
     
      
      
