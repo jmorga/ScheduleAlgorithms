@@ -35,6 +35,12 @@ public class Task implements Comparable<Task> {
 		return obj.getPriority() - this.priority;
 	}
 	
+	public void ToString()// add condidtion for algoritm 
+	{
+		System.out.println(name + " " + period + " " + ETime_1188MHz + " " + ETime_918MHz + " "
+				+ ETime_648MHz + " " + ETime_384MHz);
+	}
+	
 	public String getName() { return this.name; }
 	public int getPeriod() { return this.period; }
 	public int getDeadline() { return this.deadline; }
