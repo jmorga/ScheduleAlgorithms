@@ -19,21 +19,54 @@ public class RM {
 	
 	public String getSchedule()
 	{
-		String schedule = "Time Started  Task Name  ";
-		int period = 0;
+		String schedule = "Start Time   Task Name   Frequency   Runtime   Energy\n";
+		Task task = null;
+		int lcm = this.getLeastCommonMultiple();
+		int currentPeriod = 0;
+		int startTime = 0;
+		int timer = 0;
+		this.addTaskToQueue(currentPeriod);
 		
-		//All tasks arrive at time 0
-		for(int i = 0; i < this.tasks.length; i++)
-			this.queue.add(tasks[i]);
+		while(timer <= lcm)
+		{
+			task = queue.poll();
+			startTime = timer + 1;
+			
+			if(task.getETime() < currentPeriod)
+			{
+				timer += task.getETime();
+				currentPeriod -= task.getETime();
+			}
+			else
+			{
+				task.setETime(task.getETime() - currentPeriod);
+				currentPeriod = this.getNextPeriod();
+				this.addTaskToQueue(currentPeriod);
+				this.queue.add(task.getTask());
+			}
+			
+			schedule += this.getScheduleString(startTime, task.getName(), task.getFrequency(), startTime - timer, 0);
+		}
 		
-	    period = getNextPeriod();
-		
-		return "the fucking schedule";
+		return schedule;
 	}
 	
 	private String getScheduleString(int StartTime, String taskName, int frequency, int runTime, int energy)
 	{
-		return  StartTime + "	" + "";
+		String space = "            ";
+		
+		return  StartTime + space.substring(("" + StartTime).length()) +
+				taskName + space.substring(taskName.length()) +
+				frequency + space.substring(("" + frequency).length()) +
+		        runTime + space.substring(("" + runTime).length()) +
+		        energy + "\n";
+	}
+	
+	private void addTaskToQueue(int period)
+	{
+		for(int i = 0; i < tasks.length; i++)
+			if(period % tasks[i].getPeriod() == 0)
+				this.queue.add(tasks[i].getTask());
 	}
 	
 	private int getNextPeriod()
@@ -51,5 +84,29 @@ public class RM {
 		periods[index] += tasks[index].getPeriod();
 		
 		return period;
+	}
+	
+	private int getLeastCommonMultiple()
+	{
+		int lcm = 0;
+		int value = 0;
+		boolean notFound = true;
+		
+		for(int i = 0; i < tasks.length; i++)
+			if(lcm < tasks[i].getPeriod())
+				lcm = tasks[i].getPeriod();
+		
+		value = lcm;
+		while(notFound)
+		{
+			notFound = false;
+			for(int i = 0; i < periods.length; i++)
+				if(lcm % periods[i] != 0)
+					notFound = true;
+			
+			if(notFound) lcm += value;
+		}
+		
+		return lcm;
 	}
 }
