@@ -1,12 +1,12 @@
 import java.util.PriorityQueue;
 
-public class RM {
+public class RM_EDF {
 
 	private Task[] tasks;
 	private int[] periods;
 	private PriorityQueue<Task> queue;
 	
-	public RM(Task[] tasks)
+	public RM_EDF(Task[] tasks)
 	{
 		this.tasks = tasks;
 		this.queue = new PriorityQueue<Task>();
