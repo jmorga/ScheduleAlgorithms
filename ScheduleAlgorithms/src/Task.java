@@ -6,10 +6,8 @@ public class Task implements Comparable<Task> {
 	private int period;
 	private int deadline;
 	private int ETime;
-	private int ETime_1188MHz;
-	private int ETime_918MHz;
-	private int ETime_648MHz;
-	private int ETime_384MHz;
+	
+	private int[] ETimes;
 	private int priority;
 	
 	public Task(String name, int period, int deadline, int ETime_1188MHz, int ETime_918MHz, int ETime_648MHz, int ETime_384MHz, String algorithm)
@@ -17,10 +15,11 @@ public class Task implements Comparable<Task> {
 		this.name = name;
 		this.period = period;
 		this.deadline = deadline;
-		this.ETime_1188MHz =ETime_1188MHz;
-		this.ETime_918MHz = ETime_918MHz;
-		this.ETime_648MHz = ETime_648MHz;
-		this.ETime_384MHz = ETime_384MHz;
+		this.ETimes = new int[4];
+		this.ETimes[0] =ETime_1188MHz;
+		this.ETimes[1] = ETime_918MHz;
+		this.ETimes[2] = ETime_648MHz;
+		this.ETimes[3] = ETime_384MHz;
 		this.algorithm = algorithm;
 		
 		switch(this.algorithm)
@@ -60,24 +59,21 @@ public class Task implements Comparable<Task> {
 	public int getPriority() { return this.priority; }
 	public int getETime() { return this.ETime;}
 	
-	public int getETime_1188MHz() { return this.ETime_1188MHz; }
-	public int getETime_918MHz() { return this.ETime_918MHz; }
-	public int getETime_648MHz() { return this.ETime_648MHz; }
-	public int getETime_384MHZ() { return this.ETime_384MHz; }
+	public int[] getETimeArray() { return this.ETimes; }
 	
 	public void setETime(int time) { this.ETime = time; }
 	
 	public Task getTask()
 	{
-		Task tmp = new Task(this.name, this.period, this.deadline, this.ETime_1188MHz, this.ETime_918MHz, this.ETime_648MHz, this.ETime_384MHz, this.algorithm);
+		Task tmp = new Task(this.name, this.period, this.deadline, this.ETimes[0], this.ETimes[1], this.ETimes[2], this.ETimes[3], this.algorithm);
 		tmp.setETime(this.ETime);
 		return tmp;
 	}
 	
 	public String toString()// add condidtion for algoritm  
 	{ 
-		return (name + " " + period + " " + ETime_1188MHz + " " + ETime_918MHz + " " 
-				+ ETime_648MHz + " " + ETime_384MHz); 
+		return (name + " " + period + " " + ETimes[0] + " " + ETimes[1] + " " 
+				+ ETimes[2] + " " + ETimes[3]); 
 	} 
 	 
 }
