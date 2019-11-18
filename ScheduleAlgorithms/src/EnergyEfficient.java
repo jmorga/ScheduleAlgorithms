@@ -40,12 +40,17 @@ public class EnergyEfficient {
 	{
 		int temp = 999999999;
 		
-		for(int i = 0; i < task.length; i++)
-			for(int k = 0; k < activePower.length; k++)
+		for(int i = 0; i < task.length; i++) 
+		{
+			for(int k = 0; k < activePower.length; k++) 
+			{
 				if(power[i][k] < temp)
 					temp = power[i][k];
 				else
 					power[i][k] = -1;
+			}
+			temp = 999999999;
+		}
 	}
 	
 	private void calculateRatio()
@@ -53,7 +58,7 @@ public class EnergyEfficient {
 		for(int i = 0; i < task.length; i++)
 			for(int k = 0; k < activePower.length; k++)
 				if(power[i][k] > 0)
-					ratio[i][k] = task[i].getETimeArray()[k];
+					ratio[i][k] = (double)task[i].getETimeArray()[k] / (double)task[i].getPeriod();
 	}
 	
 	private void chooseValues()
