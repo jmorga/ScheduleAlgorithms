@@ -72,6 +72,21 @@ public class Task implements Comparable<Task> {
 		this.setting = setting;
 	}
 	
+	public int getPower()
+	{
+		int power = 0;
+		switch(setting)
+		{
+			case 0: power = 625; break;
+			case 1: power = 447; break;
+			case 2: power = 307; break;
+			case 3: power = 212; break;
+			default: power = 625;
+		}
+		
+		return power;
+	}
+	
 	public Task getTask()
 	{
 		Task tmp = new Task(this.name, this.period, this.deadline, this.ETimes[0], this.ETimes[1], this.ETimes[2], this.ETimes[3], this.algorithm);

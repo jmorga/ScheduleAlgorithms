@@ -4,12 +4,16 @@ public class RM_EDF {
 
 	private Task[] tasks;
 	private int[] periods;
+	private int timeToExecute;
+	private int idlePowerConsumption;
 	private PriorityQueue<Task> queue;
 	
-	public RM_EDF(Task[] tasks)
+	public RM_EDF(Task[] tasks, int idlePowerConsumption)
 	{
 		this.tasks = tasks;
 		this.queue = new PriorityQueue<Task>();
+		this.timeToExecute = 0;
+		this.idlePowerConsumption = idlePowerConsumption;
 		periods = new int[tasks.length];	
 		
 		for(int i = 0; i < tasks.length; i++)
@@ -28,10 +32,13 @@ public class RM_EDF {
 		int timeSegment = 0;
 		int startTime = 0;
 		int timer = 0;
+		int power = 0;
 		
 		this.addTaskToQueue(currentPeriod);
 		currentPeriod = this.getNextPeriod();
 		timeSegment = currentPeriod - lastPeriod;
+		
+		if(this.timeToExecute != 0) lcm = this.timeToExecute;
 		
 		while(timer < lcm)
 		{
@@ -47,11 +54,13 @@ public class RM_EDF {
 				this.addTaskToQueue(currentPeriod);
 				currentPeriod = this.getNextPeriod();
 				timeSegment = currentPeriod - lastPeriod;
+				power = this.idlePowerConsumption;
 			}
 			else if(task.getETime() < timeSegment)
 			{
 				name = task.getName();
 				frequency = "" + task.getFrequency();
+				power = task.getPower();
 				
 				timer += task.getETime();
 				
@@ -61,6 +70,7 @@ public class RM_EDF {
 			{
 				name = task.getName();
 				frequency = "" + task.getFrequency();
+				power = task.getPower();
 				timer += timeSegment;
 				task.setETime(task.getETime() - timeSegment);
 				lastPeriod = currentPeriod;
@@ -70,7 +80,8 @@ public class RM_EDF {
 				timeSegment = currentPeriod - lastPeriod;
 			}
 			
-			schedule += this.getScheduleString(startTime, name, frequency, timer - startTime, 0);
+			schedule += this.getScheduleString(startTime, name, frequency, timer - startTime,
+					power * (timer - startTime));
 		}
 		
 		return schedule;
@@ -84,7 +95,7 @@ public class RM_EDF {
 				taskName + space.substring(taskName.length()) +
 				frequency + space.substring(("" + frequency).length()) +
 		        runTime + space.substring(("" + runTime).length()) +
-		        energy + "\n";
+		        energy + "J\n";
 	}
 	
 	private void addTaskToQueue(int period)
@@ -113,7 +124,7 @@ public class RM_EDF {
 		return period;
 	}
 	
-	public int getLeastCommonMultiple()
+	private int getLeastCommonMultiple()
 	{
 		int lcm = 0;
 		boolean notFound = true;
@@ -133,5 +144,10 @@ public class RM_EDF {
 		}
 		
 		return lcm;
+	}
+	
+	public void setTimeToExecute(int timeToExecute)
+	{
+		this.timeToExecute = timeToExecute;
 	}
 }
