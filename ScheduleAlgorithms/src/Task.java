@@ -6,6 +6,7 @@ public class Task implements Comparable<Task> {
 	private int period;
 	private int deadline;
 	private int ETime;
+	private int setting;
 	
 	private int[] ETimes;
 	private int priority;
@@ -21,6 +22,7 @@ public class Task implements Comparable<Task> {
 		this.ETimes[2] = ETime_648MHz;
 		this.ETimes[3] = ETime_384MHz;
 		this.algorithm = algorithm;
+		this.setting = -1;
 		
 		switch(this.algorithm)
 		{
@@ -42,12 +44,13 @@ public class Task implements Comparable<Task> {
 	public int getFrequency()
 	{
 		int frequency = 0;
-		switch(this.algorithm)
+		switch(setting)
 		{
-			case "RM":
-			case "EDF": frequency = 1188; break;
-			
-			default: frequency = 0;
+			case 0: frequency = 1188; break;
+			case 1: frequency = 918; break;
+			case 2: frequency = 648; break;
+			case 3: frequency = 384; break;
+			default: frequency = 1188;
 		}
 		
 		return frequency;
@@ -63,6 +66,12 @@ public class Task implements Comparable<Task> {
 	
 	public void setETime(int time) { this.ETime = time; }
 	
+	public void setSetting(int setting) 
+	{
+		this.ETime = ETimes[setting];
+		this.setting = setting;
+	}
+	
 	public Task getTask()
 	{
 		Task tmp = new Task(this.name, this.period, this.deadline, this.ETimes[0], this.ETimes[1], this.ETimes[2], this.ETimes[3], this.algorithm);
@@ -77,4 +86,3 @@ public class Task implements Comparable<Task> {
 	} 
 	 
 }
-
