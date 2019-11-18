@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.channels.FileLockInterruptionException;
 
 public class main {
 
@@ -18,6 +19,7 @@ public class main {
         String line = null;
         
         Task [] arrayOfTask = null;
+        int [] activePower = new  int[4];
 
 	    int numOfTask = 0;
 
@@ -34,6 +36,14 @@ public class main {
            String [] firstLineInput;
            //String array full of line one values ready to set vars
            firstLineInput = bufferedReader.readLine().split(" ");
+           
+           activePower[0] = Integer.parseInt(firstLineInput[2]); 
+           activePower[1] = Integer.parseInt(firstLineInput[3]); 
+           activePower[2] = Integer.parseInt(firstLineInput[4]); 
+           activePower[3] = Integer.parseInt(firstLineInput[5]); 
+
+
+
             
            numOfTask = Integer.parseInt(firstLineInput[0]);
            
@@ -90,8 +100,20 @@ public class main {
     //for (Task task : arrayOfTask) 
     //{
 
-	//	System.out.println(task.toString());
-
 	//}
+        for (int i : activePower) 
+        {
+			System.out.println(i);
+		}
+        
+        Task[] array = new Task[3];
+		
+		array[0] = new Task("t1", 20, 20, 3, 0, 0, 0, "RM");
+		array[1] = new Task("t2", 5, 5, 2, 0, 0, 0, "RM");
+		array[2] = new Task("t3", 10, 10, 2, 0, 0, 0, "RM");
+	
+		RM rm = new RM(array);
+		
+		System.out.println(rm.getSchedule());
 	}
 }
