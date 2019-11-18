@@ -20,6 +20,7 @@ public class RM_EDF {
 			this.periods[i] = tasks[i].getPeriod();
 	}
 	
+	//Generates the schedule of the entire cycle
 	public String getSchedule()
 	{
 		String schedule = "Start Time   Task Name   Frequency   Runtime   Energy\n";
@@ -87,6 +88,7 @@ public class RM_EDF {
 		return schedule;
 	}
 	
+   //generates a string to show the information of the task tha is currently running
 	private String getScheduleString(int StartTime, String taskName, String frequency, int runTime, int energy)
 	{
 		String space = "            ";
