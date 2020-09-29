@@ -7,6 +7,6 @@ public class EDF {
 	
 	public String getSchedule()
 	{
-		return "The fucking Schedule";
+		return "The Schedule";
 	}
 }
